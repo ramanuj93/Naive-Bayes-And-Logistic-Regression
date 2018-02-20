@@ -10,7 +10,7 @@ class LogisticRegressionClassifier:
         self._iterations = iterations
         self._weights = None
         self._X = None
-        self.lastPreds = None
+        self._lastPreds = None
 
     def _logistic_regressor(self, params):
         return 1 - (1 / (1 + np.exp(np.inner(self._weights, params))))
@@ -27,11 +27,11 @@ class LogisticRegressionClassifier:
 
     def predict(self, X):
         dat = np.insert(X, 0, 1, axis=1)
-        self.lastPreds = np.round(np.apply_along_axis(self._logistic_regressor, 1, dat), 0)
-        return self.lastPreds
+        self._lastPreds = np.round(np.apply_along_axis(self._logistic_regressor, 1, dat), 0)
+        return self._lastPreds
 
     def accuracy(self, y):
-        return (y.shape[0] - np.sum(np.abs(y - self.lastPreds))) / y.shape[0]
+        return (y.shape[0] - np.sum(np.abs(y - self._lastPreds))) / y.shape[0]
 
 
 class NaiveBayesClassifier:
@@ -46,7 +46,7 @@ class NaiveBayesClassifier:
         self._neg_rows_var = None
         self._parameters = 0
         self._samples = 0
-        self.lastPreds = None
+        self._lastPreds = None
 
     def __get_conditional_parameter(self, condition, X, y):
         return X[y == condition]
@@ -76,11 +76,11 @@ class NaiveBayesClassifier:
         self._neg_rows_var = self._neg_rows.var(axis=0)
 
     def predict(self, X):
-        self.lastPreds = np.round(np.apply_along_axis(self.__naive_bayesian_probability, 1, X), 0)
-        return self.lastPreds
+        self._lastPreds = np.round(np.apply_along_axis(self.__naive_bayesian_probability, 1, X), 0)
+        return self._lastPreds
 
     def accuracy(self, y):
-        return (y.shape[0] - np.sum(np.abs(y - self.lastPreds))) / y.shape[0]
+        return (y.shape[0] - np.sum(np.abs(y - self._lastPreds))) / y.shape[0]
 
 
 def ThreeFoldCrossValidation(data, models):
