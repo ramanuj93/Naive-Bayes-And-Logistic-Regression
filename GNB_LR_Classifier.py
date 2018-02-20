@@ -47,7 +47,6 @@ class NaiveBayesClassifier:
         self._neg_rows = None
         self._pos_pobability = 0
         self._neg_pobability = 0
-
         self._pos_rows_mean = None
         self._neg_rows_mean = None
         self._pos_rows_var = None
@@ -75,7 +74,6 @@ class NaiveBayesClassifier:
         self._neg_rows = self.__get_conditional_parameter(0,X,y)
         self._pos_pobability = self._pos_rows.shape[0] / self._samples
         self._neg_pobability = self._neg_rows.shape[0] / self._samples
-
         self._pos_rows_mean = self._pos_rows.mean(axis=0)
         self._neg_rows_mean = self._neg_rows.mean(axis=0)
         self._pos_rows_var = self._pos_rows.var(axis=0)
@@ -105,6 +103,5 @@ def ThreeFoldCrossValidation(data,models):
             models[m].predict(test[:,0:-1])
             accuracies.append(models[m].accuracy(test[:,-1]))
         model_accuracies.append(accuracies)
-
     return models,model_accuracies
 
